@@ -1,0 +1,35 @@
+// Setup npm cache
+task npmCacheConfig(type: NpmTask) {
+    group = 'node'
+    description = 'Configure the NPM cache'
+    args = ['config', 'set', 'cache', "${gradle.getGradleUserHomeDir()}/caches/npm"]
+    dependsOn nodeSetup
+}
+
+// Setup yarn cache
+task yarnCacheConfig(type: YarnTask) {
+    group = 'node'
+    description = 'Configure the Yarn cache'
+    args = ['config', 'set', 'cache-folder', "${gradle.getGradleUserHomeDir()}/caches/yarn"]
+    dependsOn npmCacheConfig
+}
+
+//noinspection GroovyAssignabilityCheck
+task configAndInstall {
+    group = 'node'
+    dependsOn yarnCacheConfig, yarn_install
+
+    def buildDir = new File("${project.projectDir}/build")
+    buildDir.mkdirs()
+}
+
+task jest(type: YarnTask, dependsOn: configAndInstall) {
+    group = "verification"
+    description = "Run the Jest unit tests"
+    args = ["testPipeline"]
+}
+
+yarnSetup.mustRunAfter npmCacheConfig
+yarn_install.mustRunAfter yarnCacheConfig
+yarn_build.dependsOn configAndInstall
+npmInstall.dependsOn npmCacheConfig

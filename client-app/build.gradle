@@ -1,0 +1,65 @@
+buildscript {
+  ext {
+    springBootVersion = "1.5.9.RELEASE"
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
+}
+
+plugins {
+  id 'com.moowork.node' version '1.2.0'
+}
+
+node {
+  version = '8.5.0'
+  yarnVersion = '0.27.5'
+  download = true
+}
+
+apply plugin: 'org.springframework.boot'
+
+project.sourceCompatibility = 1.8
+project.targetCompatibility = 1.8
+
+test {
+  exclude "**/tests/*"
+}
+
+dependencies {
+  compile 'org.codehaus.groovy:groovy-all:2.4.12'
+  compile('org.springframework.boot:spring-boot-starter-web')
+  compile('org.springframework.boot:spring-boot-starter-aop')
+  compile('org.springframework.boot:spring-boot-starter-actuator')
+  compile('org.springframework.boot:spring-boot-starter-cache')
+  compile('org.springframework.boot:spring-boot-starter-data-jpa')
+  compile('org.codehaus.groovy.modules.http-builder:http-builder:0.7.1')
+  compile('org.apache.httpcomponents:httpclient:4.5.1')
+  compile group: 'com.h2database', name: 'h2', version: '1.4.197'
+
+  testCompile('org.springframework.boot:spring-boot-starter-test')
+  testCompile 'org.spockframework:spock-spring:1.0-groovy-2.4'
+  testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+}
+
+description = 'Socotra POC WS and UI'
+group = 'com.mutualofomaha.mob'
+
+
+processResources.dependsOn 'yarn_build'
+
+clean.delete << file('client-app/.jest')
+clean.delete << file('client-app/npm-debug.log')
+clean.delete << file('client-app/node_modules')
+clean.delete << file('src/main/resources/static')
+
+plugins.withId('groovy') {
+  sourceSets {
+    main {
+      // Needed for clover 2.0.1 with gradle 4
+      output.classesDir = file("build/classes/groovy/main")
+    }
+  }
+}
+
+apply from: "./gradle/tasks/node.gradle"

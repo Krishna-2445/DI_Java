@@ -1,0 +1,8 @@
+server:
+  port: 8079
+  context-path: /mob_socotra_poc
+socotra:
+  username: alice.lee
+  password: socotra
+  hostName: agilbert-moo-configeditor.co.sandbox.socotra.com
+  socotraHostUri: https://api.sandbox.socotra.com

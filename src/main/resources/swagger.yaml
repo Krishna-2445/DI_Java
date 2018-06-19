@@ -1,0 +1,121 @@
+swagger: '2.0'
+info:
+  description: Wrapper service to delegate calls between SocotraPOC UI and Socotra API
+  version: 1.0.0
+  title: socotraPOC WS
+paths:
+  /authenticate/:
+    post:
+      summary: Authenticates with socotra's API
+      parameters:
+        - in: body
+          name: jsonRequest
+          description: the tenant username and password in a json map
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+
+  /authenticate/admin/:
+    post:
+      summary: Authenticates with socotra's API
+      parameters:
+        - in: body
+          name: jsonRequest
+          description: The admin username and password in a json map
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+
+  /configuration/:
+    get:
+      summary: Retrieve the product configurations directly from Socotra
+      responses:
+        '200':
+          description: Successful
+
+  /producer/:
+    post:
+      summary: Given the policy Json from Socotra, returns the producer information to fill out the socotra API
+      parameters:
+        - in: body
+          name: policy
+          description: The policy object from socotra
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+
+  /producer/{producerNumber}/:
+    get:
+      summary: Retrieve producer information from nbs_Producer_Services
+      parameters:
+        - in: path
+          name: producerNumber
+          description: The producer number
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful
+
+  /policy/{policyLocator}/:
+    get:
+      summary: Retrieve policy Json object directly from Socotra
+      parameters:
+        - in: path
+          name: policyLocator
+          description: the id for the policy
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful
+
+  /policy/{policyLocator}/due/:
+    get:
+      summary: Calculate the total amount due by retrieving and parsing the invoices for the given policy Locator from Socotra
+      parameters:
+        - in: path
+          name: policyLocator
+          description: the id for the policy
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful
+
+  /policy/:
+    post:
+      summary: Create a new policy in Socotra
+      parameters:
+        - in: body
+          name: jsonRequest
+          description: the json object used to create the policy in socotra
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucessful
+
+  /policy/premium/:
+    post:
+      summary: Get a quote from Socotra
+      parameters:
+        - in: body
+          name: jsonRequest
+          description: the policy object and characteristics that will be used to calculate a quote
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful

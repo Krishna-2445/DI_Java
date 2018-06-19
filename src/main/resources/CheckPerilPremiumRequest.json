@@ -1,0 +1,68 @@
+{
+  "calculation": "",
+  "exposureCharacteristics": {
+    "fieldGroupsByLocator": "",
+    "fieldValues": {
+      "gender": [
+        "Male"
+      ],
+      "dob": [
+        "1983-03-08"
+      ],
+      "income": [
+        "100000"
+      ],
+      "occupation": [
+        "6A"
+      ],
+      "height_ft": [
+        "5"
+      ],
+      "height_inches": [
+        "7"
+      ],
+      "weight": [
+        "165"
+      ],
+      "diabetes": [
+        "No"
+      ],
+      "hospitalized": [
+        "No"
+      ],
+      "seen_doctor": [
+        "No"
+      ],
+      "basemoben": [
+        "3000"
+      ]
+    }
+  },
+  "exposureName": "insured_person",
+  "perilCharacteristics": {
+  },
+  "perilName": "fio",
+  "policyCharacteristics": {
+    "fieldGroupsByLocator": "",
+    "fieldValues": {
+      "address": [
+        "33 New Montgomery"
+      ],
+      "city": [
+        "San francisco"
+      ],
+      "state": [
+        "CA"
+      ],
+      "zipcode": [
+        "94105"
+      ],
+      "mode": [
+        "Monthly"
+      ]
+    },
+    "policyEndTimestamp": "2019-04-03 12:30",
+    "policyStartTimestamp": "2018-04-03 12:30"
+  },
+  "productName": "disability-income"
+}

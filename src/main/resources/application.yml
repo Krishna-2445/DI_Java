@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: 'mob_socotra_poc'
+  profiles:
+    active: ${WAS_ENV:unit}
+
+
+# H2 & Datasource
+# http://localhost:8079/mob_socotra_poc/h2
+  h2.console:
+    enabled: true
+    path: /h2
+  datasource:
+    url: jdbc:h2:file:~/test;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+    driver-class-name: org.h2.Driver
+  jpa.hibernate.ddl-auto: update
+
+
+---
+spring.profiles: Development
+spring.profiles.include:
+  - development
+  - dev
+
+---
+spring.profiles: Integration
+spring.profiles.include:
+ - integration
+ - itg
+
+---
+spring.profiles: CAT
+spring.profiles.include:
+  - cat
+
+---
+spring.profiles: Production
+spring.profiles.include:
+  - production
+  - prod
+
+---
+spring.profiles: dev,itg,cat,prod
+spring.profiles.include:
+  - server

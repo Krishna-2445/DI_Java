@@ -1,0 +1,15 @@
+.gradle
+.idea
+.DS_Store
+out/
+tmp/
+.webpack/
+build/
+bin/
+.idea/
+.gradle/
+src/main/resources/static/
+mbi-ltcw-app.iml
+client-app/test-report.xml
+coverage/
+*.log

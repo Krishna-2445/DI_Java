@@ -1,0 +1,42 @@
+def jsPath = "client-app"
+def lcovPath = "${jsPath}/dev/.jest/coverage/lcov.info"
+def covFile = file(lcovPath)
+def unitPath = "${jsPath}/dev/.jest/sonar/test-report.xml"
+def unitFile = file(unitPath)
+
+sonarqube {
+    properties {
+        property 'sonar.javascript.file.suffixes', ['jsx','js']
+
+        property 'sonar.issue.ignore.multicriteria', ['e1', 'e2', 'e3', 'e4']
+        //ignore 'When a non-existent variable is referenced a ReferenceError is raised.'
+        property 'sonar.issue.ignore.multicriteria.e1.ruleKey', 'javascript:S3827'
+        property 'sonar.issue.ignore.multicriteria.e1.resourceKey', '**/*.jsx'
+        //ignore 'Function parameters with default values should be last'
+        property 'sonar.issue.ignore.multicriteria.e2.ruleKey', 'javascript:S1788'
+        property 'sonar.issue.ignore.multicriteria.e2.resourceKey', '**/*.js'
+        //ignore 'Cognitive Complexity of functions should not be too high'
+        property 'sonar.issue.ignore.multicriteria.e3.ruleKey', 'javascript:S3776'
+        property 'sonar.issue.ignore.multicriteria.e3.resourceKey', '**/*.jsx'
+        //ignore 'Default export names and file names should match'
+        property 'sonar.issue.ignore.multicriteria.e4.ruleKey', 'javascript:S3317'
+        property 'sonar.issue.ignore.multicriteria.e4.resourceKey', '**/*.js*'
+    }
+}
+
+task rewriteCoveragePaths {
+    doLast {
+        if (covFile.exists()) {
+            covFile.text = covFile.text.replace('/build/', '/sca/')
+        }
+    }
+}
+
+task rewriteUnitTestReport {
+    doLast {
+        if (unitFile.exists()) {
+            def newContents = unitFile.text.replace('testExecutions', 'unitTest')
+            unitFile.text = newContents.replace('/build/', '/sca/')
+        }
+    }
+}
